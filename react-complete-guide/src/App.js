@@ -27,8 +27,21 @@ class App extends Component {
     })
   }
 
+  nameChangeHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => p.id === id)
+
+    const person = {
+      ...this.state.persons[personIndex]
+    }
+
+    person.name = event.target.value
+
+    const persons = [...this.state.persons]
+    persons[personIndex] = person
+    this.setState({ persons })
+  }
+
   deletePersonHandler = personIndex => {
-    // const persons = this.state.persons
     const persons = [...this.state.persons]
     persons.splice(personIndex, 1)
     this.setState({ persons: persons })
@@ -47,22 +60,32 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     }
+    let persons = null
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                key={person.id}
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                changed={event => this.nameChangeHandler(event, person.id)}
+              />
+            )
+          })}
+        </div>
+      )
+    }
 
     return (
       <div className='App'>
         <button style={style} onClick={this.togglePersonsHandler}>
           Toggle Persons
         </button>
-        {this.state.persons.map((person, index) => {
-          return (
-            <Person
-              key={person.id}
-              click={() => this.deletePersonHandler(index)}
-              name={person.name}
-              age={person.age}
-            />
-          )
-        })}
+        {persons}
       </div>
     )
   }
