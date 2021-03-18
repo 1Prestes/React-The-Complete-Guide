@@ -20,7 +20,10 @@ class App extends Component {
           username={this.state.username}
           text2="I'm a other paragraph"
         />
-        <UserInput name={this.state.username} changed={this.usernameChangeHandler} />
+        <UserInput
+          name={this.state.username}
+          changed={this.usernameChangeHandler}
+        />
 
         <UserOutput username='Titi' text2="I'm a other paragraph" />
         <UserOutput username='Bulma' text2="I'm a other paragraph" />
