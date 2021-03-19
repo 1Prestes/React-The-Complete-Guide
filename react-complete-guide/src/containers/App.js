@@ -1,22 +1,8 @@
 import React, { Component } from 'react'
-// import styled from 'styled-components'
 
 import classes from './App.css'
-import Person from '../components/components/Persons/Person/Person'
-
-// const StyledButton = styled.button`
-//   background-color: ${props => (props.alt ? 'red' : 'green')};
-//   color: white;
-//   font: inherit;
-//   border: 1px solid blue;
-//   padding: 8px;
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: ${props => (props.alt ? 'salmon' : 'lightgreen')};
-//     color: black;
-//   }
-// `
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit'
 
 class App extends Component {
   state = {
@@ -66,48 +52,24 @@ class App extends Component {
 
   render () {
     let persons = null
-    let btnClass = ''
 
     if (this.state.showPersons) {
       persons = (
-        <div>
-          {this.state.persons.map((person, index) => {
-            return (
-              <Person
-                key={person.id}
-                click={() => this.deletePersonHandler(index)}
-                name={person.name}
-                age={person.age}
-                changed={event => this.nameChangeHandler(event, person.id)}
-              />
-            )
-          })}
-        </div>
+        <Persons
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangeHandler}
+        />
       )
-      btnClass = classes.Red
-    }
-
-    const assignedClasses = []
-
-    if (this.state.persons.length <= 2) {
-      assignedClasses.push('red')
-    }
-    if (this.state.persons.length <= 1) {
-      assignedClasses.push('bold')
     }
 
     return (
       <div className={classes.App}>
-        <h1>Hi, I'm a React App</h1>
-        <p className={assignedClasses.join(' ')}>This is really working!</p>
-
-        <button
-          className={btnClass}
-          alt={this.state.showPersons}
-          onClick={this.togglePersonsHandler}
-        >
-          Toggle Persons
-        </button>
+        <Cockpit
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler}
+        />
         {persons}
       </div>
     )
