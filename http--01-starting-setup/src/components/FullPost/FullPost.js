@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
+import instance from '../../axios'
 
 import './FullPost.css'
 
@@ -9,7 +10,7 @@ const FullPost = props => {
     if (!props.id) {
       return
     }
-    axios
+    instance
       .get('/posts/' + props.id)
       .then(response => setLoadedPost(response.data))
   }, [props.id])
@@ -18,7 +19,7 @@ const FullPost = props => {
     if (!props.id) {
       return
     }
-    axios.delete('/posts/' + props.id).then(response => console.log(response))
+    instance.delete('/posts/' + props.id).then(response => console.log(response))
   }
 
   let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>
