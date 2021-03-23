@@ -1,31 +1,59 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react'
+import axios from 'axios'
 
-import './NewPost.css';
+import './NewPost.css'
 
-class NewPost extends Component {
-    state = {
-        title: '',
-        content: '',
-        author: 'Max'
+const NewPost = () => {
+  const [newPost, setNewPost] = useState({
+    title: '',
+    content: '',
+    author: 'Max'
+  })
+
+  const postDataHandler = () => {
+    const post = {
+      title: newPost.title,
+      body: newPost.content,
+      author: newPost.author
     }
 
-    render () {
-        return (
-            <div className="NewPost">
-                <h1>Add a Post</h1>
-                <label>Title</label>
-                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
-                <label>Content</label>
-                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
-                <label>Author</label>
-                <select value={this.state.author} onChange={(event) => this.setState({author: event.target.value})}>
-                    <option value="Max">Max</option>
-                    <option value="Manu">Manu</option>
-                </select>
-                <button>Add Post</button>
-            </div>
-        );
-    }
+    axios
+      .post('https://jsonplaceholder.typicode.com/posts', post)
+      .then(response => console.log(response))
+  }
+
+  return (
+    <div className='NewPost'>
+      <h1>Add a Post</h1>
+      <label>Title</label>
+      <input
+        type='text'
+        value={newPost.title}
+        onChange={event =>
+          setNewPost({ ...newPost, title: event.target.value })
+        }
+      />
+      <label>Content</label>
+      <textarea
+        rows='4'
+        value={newPost.content}
+        onChange={event =>
+          setNewPost({ ...newPost, content: event.target.value })
+        }
+      />
+      <label>Author</label>
+      <select
+        value={newPost.author}
+        onChange={event =>
+          setNewPost({ ...newPost, author: event.target.value })
+        }
+      >
+        <option value='Max'>Max</option>
+        <option value='Manu'>Manu</option>
+      </select>
+      <button onClick={postDataHandler}>Add Post</button>
+    </div>
+  )
 }
 
-export default NewPost;
+export default NewPost
