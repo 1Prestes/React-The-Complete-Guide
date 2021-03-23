@@ -17,7 +17,8 @@ class App extends Component {
       { id: 'adg3', name: 'Kuririm', age: 34 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   }
 
   static getDerivedStateFromProps (props, state) {
@@ -40,6 +41,10 @@ class App extends Component {
 
   componentDidUpdate () {
     console.log('[App.js] componentDidUpdate')
+  }
+
+  componentWillUnmount () {
+    console.log('[App.js] componentWillUnmount')
   }
 
   switchNameHandler = newName => {
@@ -93,6 +98,9 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
+        <button onClick={() => this.setState({ showCockpit: false })}>
+          Remove Cockpit
+        </button>
         <Cockpit
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
