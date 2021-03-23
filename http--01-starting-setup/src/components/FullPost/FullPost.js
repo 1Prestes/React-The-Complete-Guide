@@ -10,7 +10,7 @@ const FullPost = props => {
       return
     }
     axios
-      .get('https://jsonplaceholder.typicode.com/posts/' + props.id)
+      .get('/posts/' + props.id)
       .then(response => setLoadedPost(response.data))
   }, [props.id])
 
@@ -18,9 +18,7 @@ const FullPost = props => {
     if (!props.id) {
       return
     }
-    axios
-      .delete('https://jsonplaceholder.typicode.com/posts/' + props.id)
-      .then(response => console.log(response))
+    axios.delete('/posts/' + props.id).then(response => console.log(response))
   }
 
   let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>
