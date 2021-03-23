@@ -14,6 +14,15 @@ const FullPost = props => {
       .then(response => setLoadedPost(response.data))
   }, [props.id])
 
+  const deletePostHandler = () => {
+    if (!props.id) {
+      return
+    }
+    axios
+      .delete('https://jsonplaceholder.typicode.com/posts/' + props.id)
+      .then(response => console.log(response))
+  }
+
   let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>
   if (loadedPost) {
     post = (
@@ -21,7 +30,9 @@ const FullPost = props => {
         <h1>{loadedPost.title}</h1>
         <p>{loadedPost.body}</p>
         <div className='Edit'>
-          <button className='Delete'>Delete</button>
+          <button className='Delete' onClick={deletePostHandler}>
+            Delete
+          </button>
         </div>
       </div>
     )
