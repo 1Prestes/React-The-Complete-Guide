@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import instance from '../../../axios'
 
@@ -11,7 +11,7 @@ const Posts = props => {
   const [loadedPosts, setLoadedPosts] = useState([])
   const [selectedPostId, setSelectedPostId] = useState(null)
   const [error, setError] = useState(false)
-  
+
   useEffect(() => {
     instance
       .get('/posts')
@@ -28,20 +28,22 @@ const Posts = props => {
   }, [])
 
   const postSelectedHandler = id => {
-    setSelectedPostId(id)
+    console.log(props.history.push({ pathname: id }))
   }
 
   return (
     <section className='Posts'>
       {loadedPosts &&
         loadedPosts.map(post => (
-          <Link to={'/' + post.id} key={post.id}>
-            <Post
-              title={post.title}
-              author={post.author}
-              clicked={() => postSelectedHandler(post.id)}
-            />
-          </Link>
+          // <Link to={'/' + post.id} key={post.id}>
+          <Post
+            key={post.id}
+            to={'/' + post.id}
+            title={post.title}
+            author={post.author}
+            clicked={() => postSelectedHandler(post.id)}
+          />
+          // </Link>
         ))}
     </section>
   )
