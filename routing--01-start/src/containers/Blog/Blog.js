@@ -18,7 +18,7 @@ const Blog = () => {
           <ul>
             <li>
               <NavLink
-                to='/'
+                to='/posts'
                 exact
                 activeClassName='my-active'
                 activeStyle={{
@@ -44,9 +44,8 @@ const Blog = () => {
         </nav>
       </header>
       <Switch>
-        <Route path='/' exact component={Posts} />
+        <Route path='/posts' component={Posts} />
         <Route path='/new-post' component={NewPost} />
-        <Route path='/:id' exact component={FullPost} />
       </Switch>
     </div>
   )

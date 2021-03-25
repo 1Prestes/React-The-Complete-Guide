@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import instance from '../../../axios'
 
 import Post from '../../../components/Post/Post'
+import FullPost from '../FullPost/FullPost'
 
 import './Posts.css'
 
@@ -28,24 +29,27 @@ const Posts = props => {
   }, [])
 
   const postSelectedHandler = id => {
-    console.log(props.history.push({ pathname: id }))
+    props.history.push({ pathname: '/posts/' + id })
   }
 
   return (
-    <section className='Posts'>
-      {loadedPosts &&
-        loadedPosts.map(post => (
-          // <Link to={'/' + post.id} key={post.id}>
-          <Post
-            key={post.id}
-            to={'/' + post.id}
-            title={post.title}
-            author={post.author}
-            clicked={() => postSelectedHandler(post.id)}
-          />
-          // </Link>
-        ))}
-    </section>
+    <div>
+      <section className='Posts'>
+        {loadedPosts &&
+          loadedPosts.map(post => (
+            // <Link to={'/posts' + post.id} key={post.id}>
+            <Post
+              key={post.id}
+              to={'/' + post.id}
+              title={post.title}
+              author={post.author}
+              clicked={() => postSelectedHandler(post.id)}
+            />
+            // </Link>
+          ))}
+      </section>
+      <Route path={props.match.url + '/:id'} exact component={FullPost} />
+    </div>
   )
 }
 
