@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import './NewPost.css'
 
-const NewPost = () => {
+const NewPost = props => {
   const [newPost, setNewPost] = useState({
     title: '',
     content: '',
@@ -21,6 +21,10 @@ const NewPost = () => {
       .post('https://jsonplaceholder.typicode.com/posts', post)
       .then(response => console.log(response))
   }
+
+  useEffect(() => {
+    console.log(props)
+  }, [])
 
   return (
     <div className='NewPost'>

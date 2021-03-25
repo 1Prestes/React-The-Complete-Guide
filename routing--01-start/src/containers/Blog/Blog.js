@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Route, Link } from 'react-router-dom'
 // import axios from 'axios'
 
@@ -7,7 +7,7 @@ import './Blog.css'
 import NewPost from './NewPost/NewPost'
 
 const Blog = () => {
-  let posts = <p style={{ textAlign: 'center' }}>Something went wrong!</p>
+  // let posts = <p style={{ textAlign: 'center' }}>Something went wrong!</p>
 
   return (
     <div className='Blog'>
@@ -18,7 +18,15 @@ const Blog = () => {
               <Link to='/'>Home</Link>
             </li>
             <li>
-              <Link to='/new-post'>New Post</Link>
+              <Link
+                to={{
+                  pathname: '/new-post',
+                  hash: '#submit',
+                  search: '?quick-submit=true'
+                }}
+              >
+                New Post
+              </Link>
             </li>
           </ul>
         </nav>

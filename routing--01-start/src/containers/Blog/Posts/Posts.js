@@ -6,12 +6,12 @@ import Post from '../../../components/Post/Post'
 
 import './Posts.css'
 
-const Posts = () => {
+const Posts = (props) => {
   const [loadedPosts, setLoadedPosts] = useState([])
   const [selectedPostId, setSelectedPostId] = useState(null)
   const [error, setError] = useState(false)
-
   useEffect(() => {
+    console.log(props)
     instance
       .get('/posts')
       .then(response => {
@@ -29,7 +29,7 @@ const Posts = () => {
   const postSelectedHandler = id => {
     setSelectedPostId(id)
   }
-
+  
   return (
     <section className='Posts'>
       {loadedPosts &&
