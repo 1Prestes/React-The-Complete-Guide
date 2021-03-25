@@ -1,65 +1,33 @@
 import React, { useEffect, useState } from 'react'
+import { Route, Link } from 'react-router-dom'
 // import axios from 'axios'
 
-import instance from '../../axios'
-
+import Posts from './Posts/Posts'
 import './Blog.css'
+import NewPost from './NewPost/NewPost'
 
 const Blog = () => {
-  const [loadedPosts, setLoadedPosts] = useState([])
-  const [selectedPostId, setSelectedPostId] = useState(null)
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    instance
-      .get('/posts')
-      .then(response => {
-        const posts = response.data.slice(0, 4)
-        const updatedPosts = posts.map(post => ({
-          ...post,
-          author: 'Max'
-        }))
-
-        return setLoadedPosts(updatedPosts)
-      })
-      .catch(error => setError(true))
-  }, [])
-
-  const postSelectedHandler = id => {
-    setSelectedPostId(id)
-  }
   let posts = <p style={{ textAlign: 'center' }}>Something went wrong!</p>
 
-  if (!error) {
-    posts = (
-      <div className='Blog'>
-        <header>
-          <nav>
-            <ul>
-              <li>
-                <a href='/'>Home</a>
-              </li>
-              <li>
-                <a href='/'>New Post</a>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <section className='Posts'>
-          {loadedPosts &&
-            loadedPosts.map(post => (
-              <Post
-                key={post.id}
-                title={post.title}
-                author={post.author}
-                clicked={() => postSelectedHandler(post.id)}
-              />
-            ))}
-        </section>
-      </div>
-    )
-  }
-  return posts
+  return (
+    <div className='Blog'>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+            <li>
+              <Link to='/new-post'>New Post</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      {/* <Route path='/' render={() => <h1>Home</h1>}/> */}
+      <Route path='/' exact component={Posts} />
+      <Route path='/new-post' component={NewPost} />
+    </div>
+  )
 }
 
 export default Blog
