@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import instance from '../../../axios'
 
@@ -6,7 +7,7 @@ import Post from '../../../components/Post/Post'
 
 import './Posts.css'
 
-const Posts = (props) => {
+const Posts = props => {
   const [loadedPosts, setLoadedPosts] = useState([])
   const [selectedPostId, setSelectedPostId] = useState(null)
   const [error, setError] = useState(false)
@@ -29,17 +30,18 @@ const Posts = (props) => {
   const postSelectedHandler = id => {
     setSelectedPostId(id)
   }
-  
+
   return (
     <section className='Posts'>
       {loadedPosts &&
         loadedPosts.map(post => (
-          <Post
-            key={post.id}
-            title={post.title}
-            author={post.author}
-            clicked={() => postSelectedHandler(post.id)}
-          />
+          <Link to={'/' + post.id} key={post.id}>
+            <Post
+              title={post.title}
+              author={post.author}
+              clicked={() => postSelectedHandler(post.id)}
+            />
+          </Link>
         ))}
     </section>
   )
