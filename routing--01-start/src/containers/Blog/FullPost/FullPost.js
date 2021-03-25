@@ -7,19 +7,22 @@ import './FullPost.css'
 const FullPost = props => {
   const [loadedPost, setLoadedPost] = useState(null)
   useEffect(() => {
-    if (!props.id) {
+    console.log(props.match.params.id)
+    if (!props.match.params.id) {
       return
     }
     instance
-      .get('/posts/' + props.id)
+      .get('/posts/' + props.match.params.id)
       .then(response => setLoadedPost(response.data))
-  }, [props.id])
+  }, [props.match.params.id])
 
   const deletePostHandler = () => {
-    if (!props.id) {
+    if (!props.match.params.id) {
       return
     }
-    instance.delete('/posts/' + props.id).then(response => console.log(response))
+    instance
+      .delete('/posts/' + props.match.params.id)
+      .then(response => console.log(response))
   }
 
   let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>
