@@ -10,8 +10,6 @@ import './Posts.css'
 
 const Posts = props => {
   const [loadedPosts, setLoadedPosts] = useState([])
-  const [selectedPostId, setSelectedPostId] = useState(null)
-  const [error, setError] = useState(false)
 
   useEffect(() => {
     instance
@@ -25,7 +23,7 @@ const Posts = props => {
 
         return setLoadedPosts(updatedPosts)
       })
-      .catch(error => setError(true))
+      .catch(error => console.log(error))
   }, [])
 
   const postSelectedHandler = id => {

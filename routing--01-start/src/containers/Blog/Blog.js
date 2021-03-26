@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, NavLink, Switch, Redirect } from 'react-router-dom'
 // import axios from 'axios'
 
 import Posts from './Posts/Posts'
-import FullPost from './FullPost/FullPost'
-
 import './Blog.css'
 import NewPost from './NewPost/NewPost'
+// import AsyncComponent from '../../hoc/asyncComponent'
+// const AsyncNewPost = AsyncComponent(() => {
+//   return import('./NewPost/NewPost')
+// })
 
 const Blog = () => {
+  const [isAuth, setIsAuth] = useState(true)
   // let posts = <p style={{ textAlign: 'center' }}>Something went wrong!</p>
 
   return (
@@ -45,7 +48,9 @@ const Blog = () => {
       </header>
       <Switch>
         <Route path='/posts' component={Posts} />
-        <Route path='/new-post' component={NewPost} />
+        {/* {isAuth ? <Route path='/new-post' component={AsyncNewPost} /> : null} */}
+        {isAuth ? <Route path='/new-post' component={NewPost} /> : null}
+        <Route render={() => <h1>Not Found</h1>} />
         <Redirect from='/' to='/posts' />
       </Switch>
     </div>
