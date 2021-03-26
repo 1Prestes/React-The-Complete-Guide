@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 import './NewPost.css'
 
@@ -9,6 +10,7 @@ const NewPost = props => {
     content: '',
     author: 'Max'
   })
+  const [submitted, setSubmitted] = useState(false)
 
   const postDataHandler = () => {
     const post = {
@@ -19,7 +21,10 @@ const NewPost = props => {
 
     axios
       .post('https://jsonplaceholder.typicode.com/posts', post)
-      .then(response => console.log(response))
+      .then(response => {
+        console.log(response)
+        setSubmitted(true)
+      })
   }
 
   useEffect(() => {
@@ -28,6 +33,7 @@ const NewPost = props => {
 
   return (
     <div className='NewPost'>
+      {submitted && <Redirect to='/posts' />}
       <h1>Add a Post</h1>
       <label>Title</label>
       <input
